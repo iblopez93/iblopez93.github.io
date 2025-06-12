@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ignacio Barrera López - Full-Stack Developer</title>
+    <!-- CSS Icons will be created inline -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --dark-secondary: #1e293b;
+            --light: #f8fafc;
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--accent), var(--primary));
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-toggle {
+            background: var(--gradient);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .lang-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: slideInLeft 1s ease-out 0.2s both;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            animation: slideInLeft 1s ease-out 0.4s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: slideInLeft 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .code-window {
+            background: var(--dark-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .window-header {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #28ca42; }
+
+        .code-content {
+            padding: 2rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .code-line {
+            opacity: 0;
+            animation: typeIn 0.5s ease-out forwards;
+        }
+
+        .code-line:nth-child(1) { animation-delay: 1s; }
+        .code-line:nth-child(2) { animation-delay: 1.2s; }
+        .code-line:nth-child(3) { animation-delay: 1.4s; }
+        .code-line:nth-child(4) { animation-delay: 1.6s; }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes typeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--dark-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--dark-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        /* Experience Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: var(--gradient);
+            left: 50%;
+            margin-left: -1px;
+            top: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            top: 20px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -10px;
+        }
+
+        .timeline-content {
+            background: var(--dark-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .company {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--dark-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .project-description {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .project-value {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--dark-secondary);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--dark-secondary);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-secondary);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 4rem;
+                left: 0;
+            }
+
+            .timeline-item::before {
+                left: 10px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Language-specific content */
+        .lang-content {
+            display: none;
+        }
+
+        .lang-content.active {
+            display: block;
+        }
+
+        /* CSS Icons */
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            position: relative;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .icon-code::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 6.5L2.5 12L8 17.5l1.5-1.5L5 12l4.5-4.5L8 6.5zM16 6.5L14.5 8L19 12l-4.5 4.5L16 17.5L21.5 12L16 6.5z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 6.5L2.5 12L8 17.5l1.5-1.5L5 12l4.5-4.5L8 6.5zM16 6.5L14.5 8L19 12l-4.5 4.5L16 17.5L21.5 12L16 6.5z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-envelope::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpath d='M22 6l-10 7L2 6'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/%3E%3Cpath d='M22 6l-10 7L2 6'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-layers::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-database::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='5' rx='9' ry='3'/%3E%3Cpath d='M21 12c0 1.66-4 3-9 3s-9-1.34-9-3'/%3E%3Cpath d='M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='5' rx='9' ry='3'/%3E%3Cpath d='M21 12c0 1.66-4 3-9 3s-9-1.34-9-3'/%3E%3Cpath d='M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-tools::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-shield::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-project::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16zM12 12l-7-4 7-4 7 4-7 4z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16zM12 12l-7-4 7-4 7 4-7 4z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-phone::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-location::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .icon-external::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14L21 3'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14L21 3'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        /* Project illustrations */
+        .project-illustration {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-illustration::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .project-illustration::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-illustration.web::after {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/%3E%3Cpath d='M2 12h20'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/%3E%3Cpath d='M2 12h20'/%3E%3C/svg%3E") no-repeat center;
+            background: white;
+            border: none;
+        }
+
+        .project-illustration.lab::after {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 2v6l-2 4v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-6l-2-4V2H9z'/%3E%3Cpath d='M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 2v6l-2 4v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-6l-2-4V2H9z'/%3E%3Cpath d='M12 11.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z'/%3E%3C/svg%3E") no-repeat center;
+            background: white;
+            border: none;
+        }
+
+        .project-illustration.video::after {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23 7l-7 5 7 5V7z'/%3E%3Crect x='1' y='5' width='15' height='14' rx='2' ry='2'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23 7l-7 5 7 5V7z'/%3E%3Crect x='1' y='5' width='15' height='14' rx='2' ry='2'/%3E%3C/svg%3E") no-repeat center;
+            background: white;
+            border: none;
+        }
+
+        .project-illustration.shop::after {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z'/%3E%3Cpath d='M3 6h18'/%3E%3Cpath d='M16 10a4 4 0 0 1-8 0'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6z'/%3E%3Cpath d='M3 6h18'/%3E%3Cpath d='M16 10a4 4 0 0 1-8 0'/%3E%3C/svg%3E") no-repeat center;
+            background: white;
+            border: none;
+        }
+
+        .project-illustration.chart::after {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 20V10'/%3E%3Cpath d='M12 20V4'/%3E%3Cpath d='M6 20v-6'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18 20V10'/%3E%3Cpath d='M12 20V4'/%3E%3Cpath d='M6 20v-6'/%3E%3C/svg%3E") no-repeat center;
+            background: white;
+            border: none;
+        }
+
+        .project-illustration.award::after {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='M15.477 12.89L17 22l-5-3-5 3 1.523-9.11'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='M15.477 12.89L17 22l-5-3-5 3 1.523-9.11'/%3E%3C/svg%3E") no-repeat center;
+            background: white;
+            border: none;
+        }
+
+        /* Social icons */
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+        }
+
+        .social-icon.linkedin::before {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z'/%3E%3Crect x='2' y='9' width='4' height='12'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z'/%3E%3Crect x='2' y='9' width='4' height='12'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .social-icon.github::before {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22'/%3E%3C/svg%3E") no-repeat center;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22'/%3E%3C/svg%3E") no-repeat center;
+        }
+
+        .social-icon.gitlab::before {
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M22.65 14.39L12 22.13 1.35 14.39a.84.84 
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">IB</div>
+            <ul class="nav-links">
+                <li><a href="#home" data-en="Home" data-es="Inicio">Home</a></li>
+                <li><a href="#about" data-en="About" data-es="Acerca">About</a></li>
+                <li><a href="#skills" data-en="Skills" data-es="Habilidades">Skills</a></li>
+                <li><a href="#experience" data-en="Experience" data-es="Experiencia">Experience</a></li>
+                <li><a href="#projects" data-en="Projects" data-es="Proyectos">Projects</a></li>
+                <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+            </ul>
+            <button class="lang-toggle" onclick="toggleLanguage()">ES/EN</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="lang-content en active">
+                    <h1>Ignacio Barrera López</h1>
+                    <p class="subtitle">Full-Stack Developer & Computer Science Engineer</p>
+                    <p>Passionate about creating scalable solutions with 7+ years of experience in Java, Python, Angular, and Spring Boot. Currently crafting responsive interfaces and optimizing user experiences for global platforms.</p>
+                </div>
+                <div class="lang-content es">
+                    <h1>Ignacio Barrera López</h1>
+                    <p class="subtitle">Desarrollador Full-Stack e Ingeniero en Informática</p>
+                    <p>Apasionado por crear soluciones escalables con más de 7 años de experiencia en Java, Python, Angular y Spring Boot. Actualmente diseñando interfaces responsivas y optimizando experiencias de usuario para plataformas globales.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-code"></i>
+                        <span data-en="View Projects" data-es="Ver Proyectos">View Projects</span>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i>
+                        <span data-en="Get In Touch" data-es="Contactar">Get In Touch</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="code-window">
+                    <div class="window-header">
+                        <div class="window-dots">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
+                        </div>
+                        <span style="margin-left: 1rem; color: var(--text-secondary);">portfolio.js</span>
+                    </div>
+                    <div class="code-content">
+                        <div class="code-line" style="color: #8b5cf6;">const developer = {</div>
+                        <div class="code-line" style="color: #06b6d4;">  name: <span style="color: #10b981;">'Ignacio Barrera'</span>,</div>
+                        <div class="code-line" style="color: #06b6d4;">  skills: <span style="color: #10b981;">['Java', 'Python', 'Angular']</span>,</div>
+                        <div class="code-line" style="color: #06b6d4;">  experience: <span style="color: #f59e0b;">7</span> + <span style="color: #10b981;">' years'</span></div>
+                        <div class="code-line" style="color: #8b5cf6;">};</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title" data-en="About Me" data-es="Acerca de Mí">About Me</h2>
+                <p class="section-subtitle lang-content en active">
+                    Computer Science Engineer specializing in full-stack development with a proven track record of delivering impactful solutions.
+                </p>
+                <p class="section-subtitle lang-content es">
+                    Ingeniero en Ciencias Informáticas especializado en desarrollo full-stack con un historial comprobado de entregar soluciones impactantes.
+                </p>
+            </div>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <div class="lang-content en active">
+                        <p>Based in Montevideo, Uruguay, I'm a passionate Computer Science Engineer with over 7 years of experience in full-stack development. I specialize in creating responsive, scalable solutions using modern technologies like Java, Python, Angular, and Spring Boot.</p>
+                        
+                        <p>Throughout my career, I've led the development of more than 5 management systems, automated critical processes, and enhanced operational efficiency by 30%. I'm particularly passionate about agile methodologies like Scrum and creating seamless user experiences.</p>
+                        
+                        <p>Currently working as a Frontend Developer at Okjo LLC, I continue to push the boundaries of web development while contributing to innovative teams in global environments.</p>
+                    </div>
+                    <div class="lang-content es">
+                        <p>Ubicado en Montevideo, Uruguay, soy un apasionado Ingeniero en Ciencias Informáticas con más de 7 años de experiencia en desarrollo full-stack. Me especializo en crear soluciones responsivas y escalables usando tecnologías modernas como Java, Python, Angular y Spring Boot.</p>
+                        
+                        <p>A lo largo de mi carrera, he liderado el desarrollo de más de 5 sistemas de gestión, automatizado procesos críticos y mejorado la eficiencia operativa en un 30%. Soy particularmente apasionado por las metodologías ágiles como Scrum y crear experiencias de usuario perfectas.</p>
+                        
+                        <p>Actualmente trabajando como Desarrollador Frontend en Okjo LLC, continúo expandiendo los límites del desarrollo web mientras contribuyo a equipos innovadores en entornos globales.</p>
+                    </div>
+                </div>
+                <div class="about-stats fade-in">
+                    <div class="stat-card">
+                        <div class="stat-number">7+</div>
+                        <div class="stat-label" data-en="Years Experience" data-es="Años de Experiencia">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label" data-en="Systems Developed" data-es="Sistemas Desarrollados">Systems Developed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30%</div>
+                        <div class="stat-label" data-en="Efficiency Boost" data-es="Mejora de Eficiencia">Efficiency Boost</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label" data-en="Technologies" data-es="Tecnologías">Technologies</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="section" id="skills">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title" data-en="Technical Skills" data-es="Habilidades Técnicas">Technical Skills</h2>
+                <p class="section-subtitle lang-content en active">
+                    A comprehensive toolkit for building modern, scalable applications.
+                </p>
+                <p class="section-subtitle lang-content es">
+                    Un conjunto completo de herramientas para construir aplicaciones modernas y escalables.
+                </p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-code"></i> <span data-en="Languages" data-es="Lenguajes">Languages</span></h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">PHP</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">SCSS</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-layer-group"></i> Frameworks</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">Angular</span>
+                        <span class="skill-tag">Angular Material</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Bootstrap</span>
+                        <span class="skill-tag">ExtJS</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-database"></i> <span data-en="Databases" data-es="Bases de Datos">Databases</span></h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Oracle</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-tools"></i> <span data-en="Tools & Technologies" data-es="Herramientas y Tecnologías">Tools & Technologies</span></h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">GitLab</span>
+                        <span class="skill-tag">Apache</span>
+                        <span class="skill-tag">Nginx</span>
+                        <span class="skill-tag">Tomcat</span>
+                        <span class="skill-tag">VMware</span>
+                        <span class="skill-tag">Talend Open Studio</span>
+                        <span class="skill-tag">WordPress</span>
+                        <span class="skill-tag">Figma</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-shield-alt"></i> <span data-en="Security & Auth" data-es="Seguridad y Autenticación">Security & Auth</span></h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">JWT OAuth</span>
+                        <span class="skill-tag">Interceptors</span>
+                        <span class="skill-tag">Authentication</span>
+                        <span class="skill-tag">Authorization</span>
+                    </div>
+                </div>
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-project-diagram"></i> <span data-en="Methodologies" data-es="Metodologías">Methodologies</span></h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Scrum</span>
+                        <span class="skill-tag">Agile Development</span>
+                        <span class="skill-tag">Unit Testing</span>
+                        <span class="skill-tag">Documentation</span>
+                        <span class="skill-tag">Responsive Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="section" id="experience">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title" data-en="Professional Experience" data-es="Experiencia Profesional">Professional Experience</h2>
+                <p class="section-subtitle lang-content en active">
+                    A journey through innovative projects and technical leadership.
+                </p>
+                <p class="section-subtitle lang-content es">
+                    Un recorrido a través de proyectos innovadores y liderazgo técnico.
+                </p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 data-en="Frontend Developer - Watch Marketplace Platform" data-es="Desarrollador Frontend - Plataforma Marketplace de Relojes">Frontend Developer - Watch Marketplace Platform</h3>
+                        <div class="company">Okjo LLC</div>
+                        <div class="date" data-en="March 2025 - May 2025" data-es="Marzo 2025 - Mayo 2025">March 2025 - May 2025</div>
+                        <div class="lang-content en active">
+                            <p>Designed responsive interfaces from scratch for a luxury watch marketplace using Angular and Angular Material, integrating Figma designs with SCSS. Implemented JWT OAuth for secure authentication and optimized API connectivity with Spring Boot servers, focusing on user experience optimization and modern design patterns.</p>
+                        </div>
+                        <div class="lang-content es">
+                            <p>Diseñé interfaces responsivas desde cero para un marketplace de relojes de lujo usando Angular y Angular Material, integrando diseños de Figma con SCSS. Implementé JWT OAuth para autenticación segura y optimicé la conectividad de APIs con servidores Spring Boot, enfocándome en la optimización de la experiencia del usuario y patrones de diseño modernos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 data-en="Help Desk Technician" data-es="Técnico en Help Desk">Help Desk Technician</h3>
+                        <div class="company">DUODYN</div>
+                        <div class="date" data-en="November 2024 - March 2025" data-es="Noviembre 2024 - Marzo 2025">November 2024 - March 2025</div>
+                        <div class="lang-content en active">
+                            <p>Provided Tier 1 and 2 technical support, resolving hardware, software, and connectivity issues while reducing downtime by 30%. Configured equipment and applications ensuring operational efficiency.</p>
+                        </div>
+                        <div class="lang-content es">
+                            <p>Proporcioné soporte técnico de nivel 1 y 2, resolviendo problemas de hardware, software y conectividad mientras reducía los tiempos de inactividad en un 30%. Configuré equipos y aplicaciones asegurando eficiencia operativa.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 data-en="Semi-Senior Developer" data-es="Desarrollador Semi-Senior">Semi-Senior Developer</h3>
+                        <div class="company">Hosting S.A. (Scanntech)</div>
+                        <div class="date" data-en="February 2023 - June 2024" data-es="Febrero 2023 - Junio 2024">February 2023 - June 2024</div>
+                        <div class="lang-content en active">
+                            <p>Developed features for the Promotions Club Operational Application using Angular, TypeScript, Spring Boot, and Java, enhancing user experience by 20%. Designed data extraction reports using Talend Open Studio.</p>
+                        </div>
+                        <div class="lang-content es">
+                            <p>Desarrollé funcionalidades para la Aplicación Operativa del Club de Promociones usando Angular, TypeScript, Spring Boot y Java, mejorando la experiencia del usuario en un 20%. Diseñé reportes de extracción de datos usando Talend Open Studio.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 data-en="Computer Science Specialist B" data-es="Especialista B en Ciencias Informáticas">Computer Science Specialist B</h3>
+                        <div class="company">CEINPET</div>
+                        <div class="date" data-en="November 2019 - January 2023" data-es="Noviembre 2019 - Enero 2023">November 2019 - January 2023</div>
+                        <div class="lang-content en active">
+                            <p>Led development of 5+ management systems using Django, JavaScript, and Bootstrap. Designed and deployed the ASSAYs Management System and Proficiency Testing Platform, boosting operational efficiency by 25%.</p>
+                        </div>
+                        <div class="lang-content es">
+                            <p>Lideré el desarrollo de más de 5 sistemas de gestión usando Django, JavaScript y Bootstrap. Diseñé y desplegué el Sistema de Gestión ASSAYs y la Plataforma de Ensayos de Aptitud, aumentando la eficiencia operativa en un 25%.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in">
+                    <div class="timeline-content">
+                        <h3 data-en="Computer Science Specialist B" data-es="Especialista B en Ciencias Informáticas">Computer Science Specialist B</h3>
+                        <div class="company">XETID</div>
+                        <div class="date" data-en="September 2017 - August 2019" data-es="Septiembre 2017 - Agosto 2019">September 2017 - August 2019</div>
+                        <div class="lang-content en active">
+                            <p>Implemented user interfaces with ExtJS for the SISPLAN system, designed business logic with PHP, and supported the deployment of Planning System for government ministry operations.</p>
+                        </div>
+                        <div class="lang-content es">
+                            <p>Implementé interfaces de usuario con ExtJS para el sistema SISPLAN, diseñé lógica de negocio con PHP y apoyé el despliegue del Sistema de Planificación para operaciones del ministerio gubernamental.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title" data-en="Featured Projects" data-es="Proyectos Destacados">Featured Projects</h2>
+                <p class="section-subtitle lang-content en active">
+                    Showcasing impactful solutions that drive business value and technical innovation.
+                </p>
+                <p class="section-subtitle lang-content es">
+                    Mostrando soluciones impactantes que impulsan el valor del negocio y la innovación técnica.
+                </p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Portal CEINPET</h3>
+                        <p class="project-description lang-content en active">
+                            Comprehensive web portal for petroleum research center, featuring document management, user authentication, and data visualization systems.
+                        </p>
+                        <p class="project-description lang-content es">
+                            Portal web integral para centro de investigación petrolera, con gestión de documentos, autenticación de usuarios y sistemas de visualización de datos.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Bootstrap</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://ceinpet.cupet.cu" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span data-en="Live Site" data-es="Sitio Web">Live Site</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title" data-en="ASSAYs Management System" data-es="Sistema de Gestión ASSAYs">ASSAYs Management System</h3>
+                        <p class="project-description lang-content en active">
+                            Centralized database application for petroleum crude oil reference analysis, streamlining decision-making processes and data management.
+                        </p>
+                        <p class="project-description lang-content es">
+                            Aplicación de base de datos centralizada para análisis de referencia de petróleo crudo, optimizando procesos de toma de decisiones y gestión de datos.
+                        </p>
+                        <div class="project-value">$5,131 USD</div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Data Analysis</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title" data-en="Proficiency Testing Platform" data-es="Plataforma de Ensayos de Aptitud">Proficiency Testing Platform</h3>
+                        <p class="project-description lang-content en active">
+                            Validation platform for proficiency testing schemes, ensuring transparency and compliance with ONARC standards for laboratory accreditation.
+                        </p>
+                        <p class="project-description lang-content es">
+                            Plataforma de validación para esquemas de ensayos de aptitud, asegurando transparencia y cumplimiento con estándares ONARC para acreditación de laboratorios.
+                        </p>
+                        <div class="project-value">$2,000 - $3,200 USD</div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Django CMS</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Security</span>
+                            <span class="tech-tag">Document Management</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title" data-en="Jitsi Meet Deployment" data-es="Implementación Jitsi Meet">Jitsi Meet Deployment</h3>
+                        <p class="project-description lang-content en active">
+                            Local videoconferencing system deployment, reducing connectivity costs by 50% and saving licensing fees while maintaining security and privacy.
+                        </p>
+                        <p class="project-description lang-content es">
+                            Implementación de sistema de videoconferencias local, reduciendo costos de conectividad en 50% y ahorrando licencias mientras mantiene seguridad y privacidad.
+                        </p>
+                        <div class="project-value">$7,000 USD</div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Jitsi Meet</span>
+                            <span class="tech-tag">VMware</span>
+                            <span class="tech-tag">Debian Linux</span>
+                            <span class="tech-tag">Nginx</span>
+                            <span class="tech-tag">Network Security</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title" data-en="Watch Marketplace Platform" data-es="Plataforma Marketplace de Relojes">Watch Marketplace Platform</h3>
+                        <p class="project-description lang-content en active">
+                            Modern e-commerce platform for luxury watches with responsive design, secure authentication, and seamless user experience across all devices.
+                        </p>
+                        <p class="project-description lang-content es">
+                            Plataforma moderna de comercio electrónico para relojes de lujo con diseño responsivo, autenticación segura y experiencia de usuario perfecta en todos los dispositivos.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Angular Material</span>
+                            <span class="tech-tag">Spring Boot</span>
+                            <span class="tech-tag">JWT OAuth</span>
+                            <span class="tech-tag">SCSS</span>
+                            <span class="tech-tag">Figma</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title" data-en="Promotions Club Application" data-es="Aplicación Club de Promociones">Promotions Club Application</h3>
+                        <p class="project-description lang-content en active">
+                            Operational application for promotions management with enhanced user experience, data reporting capabilities, and quality testing protocols.
+                        </p>
+                        <p class="project-description lang-content es">
+                            Aplicación operacional para gestión de promociones con experiencia de usuario mejorada, capacidades de reporte de datos y protocolos de pruebas de calidad.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">TypeScript</span>
+                            <span class="tech-tag">Spring Boot</span>
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Talend Open Studio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-header fade-in">
+                <h2 class="section-title" data-en="Let's Work Together" data-es="Trabajemos Juntos">Let's Work Together</h2>
+                <p class="section-subtitle lang-content en active">
+                    Ready to bring your next project to life? Let's discuss how we can create something amazing together.
+                </p>
+                <p class="section-subtitle lang-content es">
+                    ¿Listo para dar vida a tu próximo proyecto? Conversemos sobre cómo podemos crear algo increíble juntos.
+                </p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>ignaciobl2017@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4 data-en="Phone" data-es="Teléfono">Phone</h4>
+                            <p>(+598) 9566-9243</p>
+                        </div>
+                    </div>
+                    <div class="contact-item fade-in">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4 data-en="Location" data-es="Ubicación">Location</h4>
+                            <p>Montevideo, Uruguay</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fade-in">
+                    <div class="lang-content en active">
+                        <h3 style="margin-bottom: 2rem; color: var(--primary);">Ready to collaborate?</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                            I'm always excited to work on new projects and collaborate with innovative teams. Whether you need a full-stack developer, frontend specialist, or technical consultant, I'm here to help bring your vision to life.
+                        </p>
+                        <p style="margin-bottom: 2rem;">
+                            With extensive experience in modern web technologies and a proven track record of delivering results, I can help you build scalable, efficient solutions that drive business growth.
+                        </p>
+                    </div>
+                    <div class="lang-content es">
+                        <h3 style="margin-bottom: 2rem; color: var(--primary);">¿Listo para colaborar?</h3>
+                        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                            Siempre estoy emocionado de trabajar en nuevos proyectos y colaborar con equipos innovadores. Ya sea que necesites un desarrollador full-stack, especialista frontend o consultor técnico, estoy aquí para ayudar a dar vida a tu visión.
+                        </p>
+                        <p style="margin-bottom: 2rem;">
+                            Con amplia experiencia en tecnologías web modernas y un historial comprobado de entregar resultados, puedo ayudarte a construir soluciones escalables y eficientes que impulsen el crecimiento del negocio.
+                        </p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/iblopez" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/iblopez93" target="_blank" class="social-link">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://gitlab.com/iblopez93" target="_blank" class="social-link">
+                            <i class="fab fa-gitlab"></i>
+                        </a>
+                        <a href="mailto:ignaciobl2017@gmail.com" class="social-link">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Ignacio Barrera López. <span data-en="All rights reserved." data-es="Todos los derechos reservados.">All rights reserved.</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            
+            // Toggle content sections
+            document.querySelectorAll('.lang-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll(`.lang-content.${currentLang}`).forEach(content => {
+                content.classList.add('active');
+            });
+
+            // Update text elements with data attributes
+            document.querySelectorAll('[data-en][data-es]').forEach(element => {
+                if (element.tagName === 'INPUT' && element.type === 'submit') {
+                    element.value = element.getAttribute(`data-${currentLang}`);
+                } else {
+                    element.textContent = element.getAttribute(`data-${currentLang}`);
+                }
+            });
+
+            // Update document language
+            document.documentElement.lang = currentLang;
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Initialize language detection
+        const userLang = navigator.language || navigator.userLanguage;
+        if (userLang.startsWith('es')) {
+            toggleLanguage();
+        }
+
+        // Mobile menu toggle (if needed)
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Add click event to mobile menu button if it exists
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        }
+    </script>
+</body>
+</html>

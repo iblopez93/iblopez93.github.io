@@ -974,6 +974,91 @@
 
         /* Custom styles for the portfolio */
         /* Add any additional custom styles here */
+
+        /* Slideshow styles */
+        .slideshow-container {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: var(--dark-secondary);
+            background-image:
+                linear-gradient(45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.05) 75%);
+            background-size: 20px 20px;
+        }
+
+        .slideshow-slide {
+            position: absolute;
+            width: 100%;
+            height: 200px;
+            /* Altura fija */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            object-fit: cover;
+            /* Cambiado a cover */
+            object-position: top;
+            /* Anclado a la parte superior */
+        }
+
+        .slideshow-slide.active {
+            opacity: 1;
+        }
+
+        .slideshow-nav {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+
+        .slideshow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slideshow-dot.active {
+            background: white;
+        }
+
+        .slideshow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            z-index: 2;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slideshow-btn:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .slideshow-btn.prev {
+            left: 10px;
+        }
+
+        .slideshow-btn.next {
+            right: 10px;
+        }
     </style>
 </head>
 
@@ -1447,8 +1532,30 @@
                 </div>
 
                 <div class="project-card fade-in">
-                    <div class="project-image">
-                        <i class="fas fa-shopping-cart"></i>
+                    <div class="slideshow-container">
+                        <button class="slideshow-btn prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="slideshow-btn next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <img src="images/watch_marketplace/Dashboard.jpg" class="slideshow-slide active"
+                            alt="Watch Marketplace Design 1">
+                        <img src="images/watch_marketplace/Log In.jpg" class="slideshow-slide"
+                            alt="Watch Marketplace Design 2">
+                        <img src="images/watch_marketplace/Sign Up.jpg" class="slideshow-slide"
+                            alt="Watch Marketplace Design 3">
+                        <img src="images/watch_marketplace/Watch Detail_.png" class="slideshow-slide"
+                            alt="Watch Marketplace Design 4">
+                        <img src="images/watch_marketplace/Watch Listing.png" class="slideshow-slide"
+                            alt="Watch Marketplace Design 5">
+                        <div class="slideshow-nav">
+                            <span class="slideshow-dot active"></span>
+                            <span class="slideshow-dot"></span>
+                            <span class="slideshow-dot"></span>
+                            <span class="slideshow-dot"></span>
+                            <span class="slideshow-dot"></span>
+                        </div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title" data-en="Watch Marketplace Platform"
@@ -1685,6 +1792,50 @@
         if (mobileMenuBtn) {
             mobileMenuBtn.addEventListener('click', toggleMobileMenu);
         }
+
+        // Slideshow functionality
+        function initSlideshow() {
+            const slideshows = document.querySelectorAll('.slideshow-container');
+
+            slideshows.forEach(slideshow => {
+                const slides = slideshow.querySelectorAll('.slideshow-slide');
+                const dots = slideshow.querySelectorAll('.slideshow-dot');
+                const prevBtn = slideshow.querySelector('.prev');
+                const nextBtn = slideshow.querySelector('.next');
+                let currentSlide = 0;
+
+                function showSlide(n) {
+                    slides.forEach(slide => slide.classList.remove('active'));
+                    dots.forEach(dot => dot.classList.remove('active'));
+
+                    currentSlide = (n + slides.length) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                    dots[currentSlide].classList.add('active');
+                }
+
+                function nextSlide() {
+                    showSlide(currentSlide + 1);
+                }
+
+                function prevSlide() {
+                    showSlide(currentSlide - 1);
+                }
+
+                // Event listeners
+                prevBtn.addEventListener('click', prevSlide);
+                nextBtn.addEventListener('click', nextSlide);
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => showSlide(index));
+                });
+
+                // Auto advance slides every 5 seconds
+                setInterval(nextSlide, 5000);
+            });
+        }
+
+        // Initialize slideshow after page load
+        window.addEventListener('load', initSlideshow);
     </script>
 </body>
 

@@ -1059,6 +1059,66 @@
         .slideshow-btn.next {
             right: 10px;
         }
+
+        /* Contact Form */
+        .contact-form-section {
+            background: var(--dark-secondary);
+            margin-top: -5rem;
+            padding-top: 7rem;
+        }
+
+        .contact-form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: var(--dark);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--dark-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form .btn {
+            width: 100%;
+            justify-content: center;
+        }
     </style>
 </head>
 
@@ -1066,7 +1126,11 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="logo">IB</div>
+            <div class="logo">
+                <a href="#home">
+                    <pre>&lt;IB/&gt;</pre>
+                </a>
+            </div>
             <ul class="nav-links">
                 <li><a href="#home" data-en="Home" data-es="Inicio">Home</a></li>
                 <li><a href="#about" data-en="About" data-es="Acerca">About</a></li>

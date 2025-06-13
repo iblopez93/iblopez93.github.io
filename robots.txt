@@ -1,9 +1,8 @@
 User-agent: *
 Allow: /
-Sitemap: https://iblopez.dev/sitemap.xml
+Sitemap: https://iblopez93.github.io/sitemap.xml
 
-# Contact Information
-# Name: Ignacio Barrera López
-# Email: ignaciobl2017@gmail.com
-# Phone: (+598) 9566-9243
-# Location: Montevideo, Uruguay
+# Información principal
+Developer: Ignacio Barrera López
+Location: Montevideo, Uruguay
+Email: ignaciobl2017@gmail.com
